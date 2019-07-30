@@ -34,7 +34,7 @@ public class TwitterProducer {
 	String token = "981596818118250498-J3oHBET52sm3OREsf0jYaLNqkDmlmgM";
 	String secret = "An0xFKgwO6EkyE3TVqn5AQUv3bhDKSspLrNIaBQZoTOvj";
 
-	List<String> terms = Lists.newArrayList("kafka","usa","soccer","colombia","france");
+	List<String> terms = Lists.newArrayList("andres");
 	
 	public TwitterProducer() {
 	}
@@ -48,11 +48,11 @@ public class TwitterProducer {
 		// Create a Twitter Client
 		BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(100000);
 
-		Client client = createTwitterClient(msgQueue);
+		final Client client = createTwitterClient(msgQueue);
 		client.connect();
 
 		// Create a producer
-		KafkaProducer<String, String> producer = createKafkaproducer();
+		final KafkaProducer<String, String> producer = createKafkaproducer();
 		
 		//
 		Runtime.getRuntime().addShutdownHook(new Thread(()->{
