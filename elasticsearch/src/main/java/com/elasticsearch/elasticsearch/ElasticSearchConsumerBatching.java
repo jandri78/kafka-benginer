@@ -12,6 +12,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -25,7 +27,7 @@ import com.google.gson.JsonParser;
 
 
 
-public class ElasticSearchConsumer {
+public class ElasticSearchConsumerBatching {
 	
 	
 	public static RestHighLevelClient createClient() {
@@ -49,6 +51,8 @@ public class ElasticSearchConsumer {
 		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 		properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");//commits manual
+		properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "100");// 100 for bulk
 		
 		
 		//Create consumer
@@ -60,7 +64,7 @@ public class ElasticSearchConsumer {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Logger logger = LoggerFactory.getLogger(ElasticSearchConsumer.class.getName());
+		Logger logger = LoggerFactory.getLogger(ElasticSearchConsumerBatching.class.getName());
 		
 		RestHighLevelClient client = createClient();
 		
@@ -72,28 +76,52 @@ public class ElasticSearchConsumer {
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
 			
+			Integer recordsCount = records.count();
+			
+			logger.info("Recived "+recordsCount+" Records");
+			
+			//Bulk Request
+			BulkRequest bulkRequest = new BulkRequest();
+			
 			for (ConsumerRecord<String,String> consumerRecord : records) {
-				//insert Data into elastic
-				String id = extracIdFromTweet(consumerRecord.value());
 				
-				String jsonString =consumerRecord.value();
+				// insert Data into elastic
+				try {
+					String id = extracIdFromTweet(consumerRecord.value());
+					String jsonString = consumerRecord.value();
+
+					IndexRequest indexRequest = new IndexRequest("twitter", "tweets", id).source(jsonString,
+							XContentType.JSON);
+
+					bulkRequest.add(indexRequest); // add to our bulk
+				} catch (NullPointerException e) {
+					logger.warn("bad Data: "+consumerRecord.value());
+				}
+								
+//				IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+//				String idres = indexResponse.getId();
+//				logger.info(idres);
+//				try {
+//					Thread.sleep(10);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				client.close();	
+//				}
+			}
+			if (recordsCount >0) {
+				BulkResponse bulkResponse = client.bulk(bulkRequest, RequestOptions.DEFAULT);
 				
-				
-				IndexRequest indexRequest = new IndexRequest("twitter","tweets",id).source(jsonString,XContentType.JSON);
-				
-				IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
-				String idres = indexResponse.getId();
-				logger.info(idres);
+				logger.info("commiting offsets");
+				consumer.commitSync();
+				logger.info("offsets commited");
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					client.close();	
 				}
-				
 			}
-			
 		}
  			//client.close();	
 	}

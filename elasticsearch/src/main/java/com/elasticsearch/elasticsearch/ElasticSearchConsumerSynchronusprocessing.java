@@ -25,7 +25,7 @@ import com.google.gson.JsonParser;
 
 
 
-public class ElasticSearchConsumer {
+public class ElasticSearchConsumerSynchronusprocessing {
 	
 	
 	public static RestHighLevelClient createClient() {
@@ -49,6 +49,8 @@ public class ElasticSearchConsumer {
 		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 		properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");//commits manual
+		properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
 		
 		
 		//Create consumer
@@ -60,7 +62,7 @@ public class ElasticSearchConsumer {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Logger logger = LoggerFactory.getLogger(ElasticSearchConsumer.class.getName());
+		Logger logger = LoggerFactory.getLogger(ElasticSearchConsumerSynchronusprocessing.class.getName());
 		
 		RestHighLevelClient client = createClient();
 		
@@ -72,6 +74,7 @@ public class ElasticSearchConsumer {
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
 			
+			logger.info("Recived "+records.count()+" Records");
 			for (ConsumerRecord<String,String> consumerRecord : records) {
 				//insert Data into elastic
 				String id = extracIdFromTweet(consumerRecord.value());
@@ -85,15 +88,23 @@ public class ElasticSearchConsumer {
 				String idres = indexResponse.getId();
 				logger.info(idres);
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					client.close();	
+//					client.close();	
 				}
 				
 			}
-			
+			logger.info("commiting offsets");
+			consumer.commitSync();
+			logger.info("offsets commited");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
  			//client.close();	
 	}
