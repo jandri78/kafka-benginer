@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch;
 import javax.sound.midi.Receiver;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -28,14 +29,18 @@ public class KafkaConsumer {
 	  }
 
 	  @KafkaListener(id = "batch-listener", topics = "first_topic")
-	  public void receive(List<String> data,
+	  public void receive(List<ConsumerRecords<String, String>> data,
 	      @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
 	      @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
 
 	    LOGGER.info("start of batch receive");
 	    for (int i = 0; i < data.size(); i++) {
-	      LOGGER.info("received message='{}' with partition-offset='{}'", data.get(i),
-	          partitions.get(i) + "-" + offsets.get(i));
+	      LOGGER.info("s"+offsets.get(i));
+	      
+	      for (ConsumerRecords<String, String> consumerRecord : data) {
+				
+			}
+	      
 	      // handle message
 
 	      latch.countDown();

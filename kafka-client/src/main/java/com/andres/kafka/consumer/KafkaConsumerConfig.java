@@ -27,9 +27,8 @@ public class KafkaConsumerConfig {
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		//
-		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");//commits manual
-		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");// 100 for bulk
+	
+		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "5");// 100 for bulk
 		
 		return new DefaultKafkaConsumerFactory<>(props);
 	}

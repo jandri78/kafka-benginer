@@ -20,6 +20,10 @@ public class Resource {
 		
 		kafkaTemplate.send(topicName , msg);
 		
+		for (int i = 0; i < 200; i++) {
+			kafkaTemplate.send(topicName , msg+""+i);
+		}
+		
 		return "Oks";
 	}
 }
