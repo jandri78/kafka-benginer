@@ -34,7 +34,7 @@ public class TwitterProducer {
 	String token = "981596818118250498-J3oHBET52sm3OREsf0jYaLNqkDmlmgM";
 	String secret = "An0xFKgwO6EkyE3TVqn5AQUv3bhDKSspLrNIaBQZoTOvj";
 
-	List<String> terms = Lists.newArrayList("andres","colombia");
+	List<String> terms = Lists.newArrayList("usa","soccer");
 	
 	public TwitterProducer() {
 	}
