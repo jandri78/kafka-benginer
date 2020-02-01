@@ -1,0 +1,162 @@
+div#main-container h4 {
+	text-align: center;
+	padding-top: 36px;
+	color: #05ac72;
+	font-size: 24px;
+	margin-bottom: 150px;
+	display: block;
+	width: 100%;
+}
+
+.main-settings {
+	width: 800px;
+	margin: 70px auto;
+}
+
+.main-settings .app_setting p {
+	display: inline-block;
+	width: 70%;
+	text-align: center;
+}
+
+.main-settings .app_setting button {
+	background-color: #ccc;
+	border: none;
+	padding: 5px 37px;
+	border-radius: 25px;
+	color: #fff;
+	float: right;
+}
+
+.main-settings .app_setting {
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	height: 130px;
+}
+
+.main-settings .app_setting:before {
+	content: '';
+	position: absolute;
+	display: inline-block;
+	background-color: #ccc;
+	height: 137px;
+	width: 2px;
+	z-index: 1;
+}
+
+.main-settings .app_setting:after {
+	content: '';
+	width: 50px;
+	height: 50px;
+	background-color: #fff;
+	display: inline-block;
+	border: 2px solid #ccc;
+	border-radius: 50px;
+	position: absolute;
+	left: -23px;
+	z-index: 6;
+}
+
+.main-settings .app_setting .complete:after {
+	content: '';
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	border: 2px solid #ccc;
+	border-radius: 50px;
+	position: absolute;
+	left: -23px;
+	z-index: 6;
+	background-color: #06de93;
+	background-image: url(https://testshopifyapp.tellafriend.club/css/check.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.main-settings .app_setting:after {
+	content: '';
+	width: 50px;
+	height: 50px;
+	background-color: #28a745;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	border: 2px solid #ccc;
+	border-radius: 50px;
+	position: absolute;
+	left: -23px;
+	z-index: 6;
+	background-image: url(https://testshopifyapp.tellafriend.club/css/check.png);
+}
+
+.main-settings .app_setting.complete:after {
+	background-color: white;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.main-settings .setup_referral.app_setting:after {
+	top: 40px;
+}
+
+.main-settings .active_referral.app_setting:after {
+	top: inherit;
+	bottom: -15px;
+}
+
+.main-settings .app_setting.complete button {
+	background-color: #05ac72;
+}
+
+.setup_app.app_setting p {
+	padding-top: 16px;
+}
+
+.setup_app.app_setting button {
+	margin-top: 9px;
+}
+
+.main-settings .setup_referral.app_setting p {
+	padding-top: 48px;
+}
+
+.main-settings .setup_referral.app_setting button.configure_referral {
+	margin-top: 40px;
+}
+
+.active_referral.app_setting p {
+	padding-top: 104px;
+}
+
+.active_referral.app_setting button.active_referral {
+	margin-top: 103px;
+}
+
+div#main-container h4:after {
+	display: block;
+	content: '';
+	background-color: #05ac72;
+	height: 1px;
+	position: relative;
+	top: 34px;
+	width: 500px;
+	margin: 0 auto;
+}
+
+.main-settings button:focus {
+	outline: none;
+}
+
+.complete button:hover {
+	background-color: #056b48 !important;
+}
+
+.complete:after {
+	background-image: url(https://testshopifyapp.tellafriend.club/css/check.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+

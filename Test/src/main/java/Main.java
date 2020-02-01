@@ -40,6 +40,13 @@ public class Main {
 		DecimalFormat formateador = new DecimalFormat("####.###");
 		// Imprime esto con cuatro decimales, es decir: 7,1234
 		System.out.println (formateador.format (7.12342383));
+		
+		
+		String a = "https://devleoshop.myshopify.com";
+		
+		String reemplazo = a.replace("https://", "");
+		
+		System.out.println(a+" ---> "+reemplazo);
 
 	}
 

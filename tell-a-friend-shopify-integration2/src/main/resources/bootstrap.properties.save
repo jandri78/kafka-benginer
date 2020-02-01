@@ -1,0 +1,11 @@
+spring.application.name=tell-a-friend-shopify-integration
+server.port=9034
+
+spring.cloud.config.uri=http://configserver:8888
+
+
+# These properties can be modifies  
+spring.profiles.active=pre
+spring.cloud.config.label=1.2.0
+# This property was created knowing the VPN IP segment  
+spring.cloud.inetutils.preferredNetworks: 10.170

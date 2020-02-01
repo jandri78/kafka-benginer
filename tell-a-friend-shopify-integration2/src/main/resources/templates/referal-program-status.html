@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:400,500,600,700,800"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="css/referal-program-status.css"></link>
+</head>
+<body>
+	<div class="container"
+		th:classappend="${!referalProgramStatus} ? 'hide'">
+		<div class="row panel text-center shadow">
+			<div class="col-1"></div>
+			<div class="col-10">
+
+				<div class="row">
+					<div class="col">
+						<h4 class="title" th:text="#{referal.program.status.page.title}"></h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m20">
+						<center>
+							<div class="circle-button"></div>
+						</center>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<a th:href="${linkButtonProgramSettings}">
+							<button type="button" class="btn btn-success"
+								th:text="#{referal.program.status.page.title.button.label}"></button>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+
+	<div class="container"
+		th:classappend="${referalProgramStatus} ? 'hide'">
+		<div class="row panel text-center shadow">
+			<div class="col-1"></div>
+			<div class="col-10">
+
+				<div class="row">
+					<div class="col">
+						<h4 class="title"
+							th:text="#{referal.program.status.page.inactive.title}"></h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m20">
+						<center>
+							<div class="circle-button-disable"></div>
+						</center>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<a th:href="${linkButtonProgramSettings}">
+							<button type="button" class="btn btn-success"
+								th:text="#{referal.program.status.page.inactive.title.button.label}"></button>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

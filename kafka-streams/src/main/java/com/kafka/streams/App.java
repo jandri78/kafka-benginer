@@ -35,7 +35,7 @@ public class App
 		//input Topic
 		KStream<String, String> inputTopoic = streamsBuilder.stream("twitter_tweets");
 		KStream<String, String> filteredStream = inputTopoic.filter(
-				(k,jsonTweet) -> extracUserFollowersInTweet(jsonTweet) > 1000		
+				(k,jsonTweet) -> extracUserFollowersInTweet(jsonTweet) > 10000
 		);
 		filteredStream.to("important_tweets");
 

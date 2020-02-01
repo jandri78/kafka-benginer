@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:400,500,600,700,800"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="css/merchant-account-status.css"></link>
+</head>
+<body>
+
+	<div class="content-container container">
+		<div id="main-container">
+
+			<h4 th:text="#{merchant.account.status.page.title}"></h4>
+
+			<div class="main-settings">
+				<div class="setup_app app_setting"
+					th:classappend="${!tutorial.advocatesFriends} ? 'complete': 'incomplete'">
+					<p th:text="#{merchant.account.status.friends.rewards.title}"></p>
+					<a th:disable="${tutorial.advocatesFriends}"
+						th:href="${linkButtonDashboard}" th:title="${linkButtonDashboard}"
+						href="http://premerchant.tellafriend.club/referal-program/rewards/from-dashboard">
+						<button type="button" class="configure_app"
+							th:disable="${tutorial.advocatesFriends}"
+							th:text="#{merchant.account.status.friends.rewards.button.label}"></button>
+					</a>
+				</div>
+				<div class="setup_referral app_setting"
+					th:classappend="${!tutorial.referralProgramStyle} ? 'complete': 'incomplete'">
+					<p th:text="#{merchant.account.status.program.style.title}"></p>
+					<a th:disable="${tutorial.referralProgramStyle}"
+						th:href="${linkButtonStoreSettings}"
+						th:title="${linkButtonStoreSettings}">
+						<button type="button" class="configure_referral"
+							th:disable="${tutorial.referralProgramStyle}"
+							th:text="#{merchant.account.status.program.style.button.label}">
+						</button>
+					</a>
+				</div>
+				<div class="active_referral app_setting"
+					th:classappend="${!tutorial.activeReferralProgram} ? 'complete': 'incomplete'">
+					<p th:text="#{merchant.account.status.active.program.style.title}"></p>
+					<a th:disable="${tutorial.referralProgramStyle}"
+						th:href="${linkButtonProgramSettings}"
+						th:title="${linkButtonProgramSettings}">
+						<button type="button" class="active_referral"
+							th:disable="${tutorial.activeReferralProgram}"
+							th:text="#{merchant.account.status.active.program.style.button.label}"></button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
